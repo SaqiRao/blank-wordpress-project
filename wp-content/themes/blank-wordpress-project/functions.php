@@ -14,6 +14,7 @@ function enqueue_bootstrap_scripts() {
 add_action('wp_enqueue_scripts', 'enqueue_bootstrap_scripts');
 
 
+require_once get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php';
 
 // Register a new sidebar  named 'sidebar'
 function add_widget_support() {
@@ -36,3 +37,12 @@ function add_Main_Nav() {
   }
  
   add_action( 'init', 'add_Main_Nav' );
+
+  function redirect_ip_based() {
+    $ip = $_SERVER['REMOTE_ADDR'];
+    if (strpos($ip, '77.29') === 0) {
+        wp_redirect(home_url());
+        exit;
+    }
+}
+add_action('template_redirect', 'redirect_ip_based');
