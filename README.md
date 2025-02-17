@@ -1,2 +1,2 @@
-User:admin
-PASS: admin
+# Blank WordPress Project
+
