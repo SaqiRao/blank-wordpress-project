@@ -7,3 +7,80 @@ Version: 1.0
 License: GNU General Public License v3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
+
+
+/* General Styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.projects-section h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Projects Container */
+.projects-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Single Project Item */
+.project-item {
+    width: 30%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Project Title */
+.project-item h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.project-item h2 a {
+    text-decoration: none;
+    color: #333;
+}
+
+.project-item h2 a:hover {
+    color: #0073aa;
+}
+
+/* Project Excerpt */
+.project-excerpt {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Pagination Styling */
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    padding: 10px 15px;
+    margin: 0 5px;
+    background-color: #f1f1f1;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pagination a:hover {
+    background-color: #0073aa;
+    color: #fff;
+}
+
+.pagination .current {
+    background-color: #0073aa;
+    color: #fff;
+    padding: 10px 15px;
+}
