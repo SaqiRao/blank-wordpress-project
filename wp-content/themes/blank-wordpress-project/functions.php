@@ -46,3 +46,27 @@ function add_Main_Nav() {
     }
 }
 add_action('template_redirect', 'redirect_ip_based');
+
+// Register 'Projects' custom post type
+function create_projects_post_type() {
+    register_post_type('projects', [
+        'labels' => [
+            'name' => 'Projects',
+            'singular_name' => 'Project',
+        ],
+        'public' => true,
+        'has_archive' => true,
+        'supports' => ['title', 'editor', 'thumbnail'],
+        'taxonomies' => ['project_type'],
+    ]);
+}
+add_action('init', 'create_projects_post_type');
+
+// Register 'Project Type' taxonomy
+function create_project_type_taxonomy() {
+    register_taxonomy('project_type', 'projects', [
+        'label' => 'Project Types',
+        'hierarchical' => true,
+    ]);
+}
+add_action('init', 'create_project_type_taxonomy');

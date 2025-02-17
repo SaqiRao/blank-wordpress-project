@@ -1,0 +1,5 @@
+# Ignore everything in wp-content except themes and plugins
+/wp-content/*
+!/wp-content/themes/
+/wp-content/themes/blank-wordpress-project/*
+

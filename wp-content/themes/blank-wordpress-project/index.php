@@ -14,6 +14,6 @@
         <p>Sorry, no posts were found!</p>
       </article>
 <?php endif; ?>
-  </section><?php get_sidebar(); ?>
+  </section>
 </main>
 <?php get_footer(); ?>
