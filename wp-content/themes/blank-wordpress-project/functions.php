@@ -70,3 +70,34 @@ function create_project_type_taxonomy() {
     ]);
 }
 add_action('init', 'create_project_type_taxonomy');
+
+// Add AJAX action for fetching projects
+function get_projects_ajax() {
+    $args = array(
+        'post_type' => 'projects',
+        'posts_per_page' => is_user_logged_in() ? 6 : 3,
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'project_type',
+                'field' => 'slug',
+                'terms' => 'architecture',
+            ),
+        ),
+    );
+    $projects_query = new WP_Query($args);
+
+    $projects = array();
+    while ($projects_query->have_posts()) : $projects_query->the_post();
+        $projects[] = array(
+            'id' => get_the_ID(),
+            'title' => get_the_title(),
+            'link' => get_permalink(),
+        );
+    endwhile;
+
+    wp_send_json_success(array('data' => $projects));
+}
+
+add_action('wp_ajax_get_projects', 'get_projects_ajax');
+add_action('wp_ajax_nopriv_get_projects', 'get_projects_ajax');
+
