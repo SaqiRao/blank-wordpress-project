@@ -83,32 +83,39 @@ function create_project_type_taxonomy() {
 add_action('init', 'create_project_type_taxonomy');
 
 // Add AJAX action for fetching projects
-function get_projects_ajax() {
+function load_projects_ajax() {
+    // Check nonce for security
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'custom_nonce')) {
+        wp_send_json_error(array('message' => 'Invalid nonce.'));
+    }
+
+    // Create the query to get Projects
     $args = array(
-        'post_type' => 'projects',
-        'posts_per_page' => is_user_logged_in() ? 6 : 3,
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'project_type',
-                'field' => 'slug',
-                'terms' => 'architecture',
-            ),
-        ),
+        'post_type' => 'projects', // The custom post type
+        'posts_per_page' => 3,     // Limit to 3 projects for this example
     );
+
     $projects_query = new WP_Query($args);
-
     $projects = array();
-    while ($projects_query->have_posts()) : $projects_query->the_post();
-        $projects[] = array(
-            'id' => get_the_ID(),
-            'title' => get_the_title(),
-            'link' => get_permalink(),
-        );
-    endwhile;
 
-    wp_send_json_success(array('data' => $projects));
+    if ($projects_query->have_posts()) {
+        while ($projects_query->have_posts()) : $projects_query->the_post();
+            $projects[] = array(
+                'id' => get_the_ID(),
+                'title' => get_the_title(),
+                'link' => get_permalink(),
+            );
+        endwhile;
+
+        wp_send_json_success(array('data' => $projects)); // Send the data back to JS
+    } else {
+        wp_send_json_error(array('message' => 'No projects found.'));
+    }
+
+    wp_reset_postdata();
 }
 
-add_action('wp_ajax_get_projects', 'get_projects_ajax');
-add_action('wp_ajax_nopriv_get_projects', 'get_projects_ajax');
+add_action('wp_ajax_load_projects', 'load_projects_ajax'); // For logged-in users
+add_action('wp_ajax_nopriv_load_projects', 'load_projects_ajax'); // For non-logged-in users
+
 
