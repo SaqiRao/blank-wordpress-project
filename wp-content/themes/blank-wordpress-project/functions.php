@@ -115,7 +115,25 @@ function load_projects_ajax() {
     wp_reset_postdata();
 }
 
-add_action('wp_ajax_load_projects', 'load_projects_ajax'); // For logged-in users
-add_action('wp_ajax_nopriv_load_projects', 'load_projects_ajax'); // For non-logged-in users
+add_action('wp_ajax_load_projects', 'load_projects_ajax'); 
+add_action('wp_ajax_nopriv_load_projects', 'load_projects_ajax'); 
 
+
+// Fetch the random coffee API
+function hs_give_me_coffee() {
+    // Fetch the random coffee API
+    $response = wp_remote_get('https://randomcoffeeapi.com/api/v1/coffee');
+    
+    
+    if (is_wp_error($response)) {
+        return 'Error fetching coffee link';
+    }
+
+    
+    $data = wp_remote_retrieve_body($response);
+
+    
+    $coffee_data = json_decode($data);
+    return isset($coffee_data->link) ? $coffee_data->link : 'No coffee link found';
+} 
 
