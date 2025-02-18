@@ -17,6 +17,13 @@
             ?>
             <div class="col-md-4 mb-4"> <!-- 3 columns layout on medium screens -->
                 <div class="card h-100">
+                    <a href="<?php the_permalink(); ?>">
+                        <?php if (has_post_thumbnail()) : ?>
+                            <img src="<?php the_post_thumbnail_url('medium'); ?>" class="card-img-top" alt="<?php the_title_attribute(); ?>">
+                        <?php else : ?>
+                            <img src="path/to/default-image.jpg" class="card-img-top" alt="Default Image">
+                        <?php endif; ?>
+                    </a>
                     <div class="card-body">
                         <h5 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h5>
                         <p class="card-text"><?php the_excerpt(); ?></p>
