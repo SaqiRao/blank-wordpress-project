@@ -5,11 +5,22 @@ function enqueue_bootstrap_scripts() {
     // Enqueue Bootstrap CSS (Optional, if you haven't already added it)
     wp_enqueue_style('bootstrap-css', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css', false, '5.3.0-alpha1');
 
+    // Enqueue WordPress's built-in jQuery
+    wp_enqueue_script('jquery');
+
     // Enqueue Popper.js (Required for Bootstrap components like tooltips, popovers, dropdowns)
     wp_enqueue_script('popper-js', 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js', array(), '2.11.6', true);
 
     // Enqueue Bootstrap JS (Bootstrap's main JS file that depends on Popper.js)
     wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js', array('popper-js'), '5.3.0-alpha1', true);
+
+    wp_enqueue_script('custom-js', get_template_directory_uri() . '/js/custom-js.js', array('jquery'), null, true);
+
+    // Localize the script to pass PHP variables to JS
+    wp_localize_script('custom-js', 'custom_ajax_obj', array(
+        'ajax_url' => admin_url('admin-ajax.php'), // URL for the AJAX request
+        'nonce' => wp_create_nonce('custom_nonce')  // Security nonce for the request
+    ));
 }
 add_action('wp_enqueue_scripts', 'enqueue_bootstrap_scripts');
 
