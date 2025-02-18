@@ -60,16 +60,18 @@ add_action('template_redirect', 'redirect_ip_based');
 
 // Register 'Projects' custom post type
 function create_projects_post_type() {
-    register_post_type('projects', [
-        'labels' => [
+    $args = array(
+        'labels' => array(
             'name' => 'Projects',
             'singular_name' => 'Project',
-        ],
+        ),
         'public' => true,
         'has_archive' => true,
-        'supports' => ['title', 'editor', 'thumbnail'],
-        'taxonomies' => ['project_type'],
-    ]);
+        'rewrite' => array('slug' => 'projects'), // Archive page URL
+        'show_in_rest' => true, // Enable Gutenberg
+        'supports' => array('title', 'editor', 'thumbnail'),
+    );
+    register_post_type('projects', $args);
 }
 add_action('init', 'create_projects_post_type');
 
@@ -159,3 +161,10 @@ function get_kanye_quotes() {
 
     return $quotes;
 }
+
+function theme_setup() {
+    // Add support for post thumbnails
+    add_theme_support('post-thumbnails');
+}
+add_action('after_setup_theme', 'theme_setup');
+
