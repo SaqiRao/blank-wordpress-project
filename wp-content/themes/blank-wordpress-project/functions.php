@@ -137,3 +137,25 @@ function hs_give_me_coffee() {
     return isset($coffee_data->link) ? $coffee_data->link : 'No coffee link found';
 } 
 
+function get_kanye_quotes() {
+    $quotes = [];
+
+    // Fetch 5 Kanye quotes from the Kanye West API
+    for ($i = 0; $i < 5; $i++) {
+        $response = wp_remote_get('https://api.kanye.rest');
+        
+        // Check for errors in the API response
+        if (is_wp_error($response)) {
+            return ['Error fetching quotes'];
+        }
+
+        // Get the body of the response
+        $data = wp_remote_retrieve_body($response);
+
+        // Decode the JSON response and store the quote
+        $quote_data = json_decode($data);
+        $quotes[] = isset($quote_data->quote) ? $quote_data->quote : 'No quote found';
+    }
+
+    return $quotes;
+}
