@@ -12,13 +12,9 @@
       <div class="container">
          <!-- Logo and Title -->
          <div class="row">
-            <div class="col-md-6">
-               <h1><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="<?php echo get_template_directory_uri(); ?>/Images/logo.png" alt="Site Logo" width="50px" height="50px"></a></h1>
-               <h2><?php bloginfo('description'); ?></h2>
-            </div>
 
             <!-- Navigation Menu -->
-            <div class="col-md-6">
+            <div class="col-md-12">
                <nav class="navbar navbar-expand-lg navbar-light bg-light">
                   <a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
